@@ -1,76 +1,65 @@
-# Mutual Fund Analytics
+# Mutual Fund Analytics Platform 📈
+### End-to-End Data Engineering & ETL Pipeline — Bluestock Capstone Project
 
-This repository houses the **Mutual Fund Analytics** Capstone Project, developed as part of the Bluestock Fintech Internship program. 
+Welcome to the **Mutual Fund Analytics Platform** Capstone Project repository, developed as part of the Bluestock Fintech Internship program. 
 
-The project focuses on creating an end-to-end data pipeline (ETL) and analytics system to ingest, clean, store, and visualize Indian Mutual Fund datasets.
+This repository leverages a clean **Monorepo Structure** to organize the end-to-end development of a financial analytics platform that ingests, cleans, stores, analyzes, and visualizes Indian Mutual Fund datasets.
 
 ---
 
-## 📁 Repository Directory Structure
+## 📁 7-Day Monorepo Folder Structure
+
+The repository is structured as a progressive daily monorepo. Each day's work is self-contained within its respective folder:
 
 ```text
-Bluestock Internship/
+bluestock-mutual-fund-analytics/
 │
-├── data/
-│   ├── raw/             # Ingested raw datasets (local CSVs + live fetched CSVs)
-│   └── processed/       # Downstream transformed datasets (Day 2)
+├── .git/
+├── .gitignore
+├── requirements.txt            # Unified project dependencies
+├── README.md                   # Master repository documentation (You are here)
 │
-├── notebooks/           # Jupyter/Colab staging workspace
-├── sql/                 # PostgreSQL table schemas and staging queries
-├── dashboard/           # Visual analytics and UI config staging
-├── reports/             # Detailed reports & data quality summaries
-│   └── day1_data_quality_summary.md
+├── day 1/                      # Day 1: Project Setup + Data Ingestion (ETL)
+│   ├── data_ingestion.py       # Local ETL bootstrapping, loading, & validation pipeline
+│   ├── live_nav_fetch.py       # Live daily NAV fetcher from mfapi.in
+│   ├── sql/                    # PostgreSQL DDL staging queries
+│   ├── dashboard/              # Staging directory for dashboard assets
+│   ├── notebooks/              # Jupyter research environment
+│   ├── reports/                # Day 1 data quality reports & Word generator
+│   └── README.md               # Day 1 documentation & workflows
 │
-├── data_ingestion.py    # Local ETL bootstrapping, loading, & validation pipeline
-├── live_nav_fetch.py    # Live NAV scraper from mfapi.in
-├── requirements.txt     # Python package dependencies
-└── README.md            # Project documentation index
+└── day 2/                      # Day 2: Data Cleaning + SQLite Database Design
+    ├── data/                   # Self-contained Day 2 data directory
+    │   ├── raw/                # Raw source datasets (CSVs + Scraped JSONs)
+    │   └── processed/          # Downstream validated & forward-filled CSVs
+    ├── schema.sql              # Star Schema relational DDL (facts and dimensions)
+    ├── queries.sql             # 10 comprehensive analytical SQL queries
+    ├── db_loader.py            # SQLite database creation & insertion script
+    ├── execute_queries.py      # Automated SQL execution harness
+    ├── data_dictionary.md      # Database column reference and business definitions
+    └── bluestock_mf.db         # Loaded SQLite database instance (~10.5 MB)
 ```
 
 ---
 
-## 🚀 Day 1 Ingestion Workflow & Setup
+## 🚀 Progressive Project Roadmap
 
-### 1. Prerequisites & Installation
-Ensure you have Python 3.8+ installed on your system. 
+### 📅 [Day 1: Project Setup + Data Ingestion](file:///c:/Users/jibum/OneDrive/Desktop/Bluestock%20Internship/day%201/README.md)
+*   **ETL Bootstrap Ingestion:** Completed local python pipeline in `day 1/data_ingestion.py` that auto-generates raw dataset structures and audits file metrics.
+*   **Live NAV Fetcher:** Real-time JSON parser in `day 1/live_nav_fetch.py` scraping historical NAVs for 6 core mutual fund schemes directly from the public AMFI REST API (`mfapi.in`).
+*   **Quality Reports:** Comprehensive data quality and referential integrity audit generated in `day 1/reports/day1_data_quality_summary.md`.
 
-Install the required Python libraries using the unified package configuration:
-```bash
-pip install -r requirements.txt
-```
-
-### 2. Running Local ETL & Data Ingestion
-The file `data_ingestion.py` acts as the ingestion pipeline. To facilitate immediate local execution without external file dependencies, it features an automated bootstrap generator. On first run, it generates 10 realistic raw CSV datasets inside `data/raw/` and outputs file metrics:
-
-To run the local ingestion and explore statistics:
-```bash
-python data_ingestion.py
-```
-
-This will output:
-*   File shape, dtypes, and head preview for all 10 raw CSVs.
-*   Explorer dimensions (unique AMC, categories, sub-categories, risk grades).
-*   Detected anomalies (missing values, duplicated transaction rows, type anomalies).
-*   AMFI relational consistency check (referential integrity between `fund_master` and `nav_history`).
-
-### 3. Fetching Live NAV Data
-To scrap real-time daily Net Asset Values (NAV) for target schemes from the free public API `mfapi.in`, run the fetcher:
-```bash
-python live_nav_fetch.py
-```
-
-This fetches daily historical NAV, fund house, and scheme metadata for:
-1.  **HDFC Top 100 Direct** (125497)
-2.  **SBI Bluechip** (119551)
-3.  **ICICI Bluechip** (120503)
-4.  **Nippon Large Cap** (118632)
-5.  **Axis Bluechip** (119092)
-6.  **Kotak Bluechip** (120841)
-
-All live data is parsed from JSON and written as structured raw CSV files inside `data/raw/`.
+### 📅 [Day 2: Data Cleaning + SQLite DB Design](file:///c:/Users/jibum/OneDrive/Desktop/Bluestock%20Internship/day%202/data_dictionary.md)
+*   **Robust Data Cleaning:** Implemented parsing, deduplication, anomaly boundaries, and daily continuous **forward-filling** for holiday/weekend NAV tracking in `day 2/data_cleaning.py`.
+*   **Dimensional Star Schema:** Designed a normalized relational model in `day 2/schema.sql` spanning 2 dimension tables (`dim_fund`, `dim_date`) and 6 fact tables (`fact_nav`, `fact_transactions`, etc.).
+*   **SQL Analytics:** Drafted 10 high-value business queries in `day 2/queries.sql` analyzing AUM trends, monthly average NAVs, YoY growth, and investor demographic cash flows.
 
 ---
 
-## 📈 Quality & Validation Reports
-For a deep dive into the ingested dataset profiles, relational code mismatches, and data cleanliness reports, check out:
-*   [Day 1 Data Quality Summary](file:///C:/Users/jibum/OneDrive/Desktop/Bluestock%20Internship/reports/day1_data_quality_summary.md)
+## 🛠️ Technical Stack Details
+
+*   **Language:** Python 3.10+ (Pandas, NumPy, Requests)
+*   **Database Engine:** SQLite3
+*   **SQL Interfaces:** standard SQLite SQL DDL
+*   **ORM / Drivers:** Python-native SQLite3 connector
+*   **Version Control:** Git + GitHub
