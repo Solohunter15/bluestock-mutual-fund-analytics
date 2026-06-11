@@ -19,7 +19,3 @@ env/
 *.log
 *.tmp
 *.pbix.backup
-
-# Scratch / Temp Folders
-scratch/
-

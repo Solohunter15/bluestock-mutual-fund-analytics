@@ -50,12 +50,19 @@ bluestock-mutual-fund-analytics/
 │   │   └── fund_scorecard.csv  # 0-100 composite scorecard & rankings
 │   └── README.md               # Day 4 detailed performance & ranking documentation
 │
-└── day 5/                      # Day 5: Interactive BI Dashboard & Web Deployment
-    ├── Dashboard.pdf           # Combined 4-page exported report
-    ├── page_1.png to page_4.png # Individual page screenshots
-    ├── dashboard/              # Streamlit application scripts
-    ├── bluestock_mf_dashboard.pbix.pbip # Power BI project descriptor
-    └── README.md               # Day 5 documentation & deployment guide
+├── day 5/                      # Day 5: Interactive BI Dashboard & Web Deployment
+│   ├── Dashboard.pdf           # Combined 4-page exported report
+│   ├── page_1.png to page_4.png # Individual page screenshots
+│   ├── dashboard/              # Streamlit application scripts
+│   ├── bluestock_mf_dashboard.pbix.pbip # Power BI project descriptor
+│   └── README.md               # Day 5 documentation & deployment guide
+│
+└── day 6/                      # Day 6: Advanced Analytics & Risk Metrics
+    ├── Advanced_Analytics.ipynb # Main quantitative analytics Jupyter notebook
+    ├── var_cvar_report.csv      # Computed VaR & CVaR report for all 40 schemes
+    ├── recommender.py           # Command-line fund recommendation tool
+    ├── rolling_sharpe_chart.png # Time-series rolling Sharpe ratio chart
+    └── README.md                # Day 6 detailed risk-return & cohort documentation
 ```
 
 ---
@@ -88,13 +95,13 @@ bluestock-mutual-fund-analytics/
 *   **Star Schema Connection**: Integrated SQLite star schema to power real-time visualizations (AUM growth, risk-return scatters, geo-demographic transactions, and benchmark comparisons).
 *   **Automated Exports**: Wrote Playwright-based browser automation to render and capture all dashboard views and compile a unified `Dashboard.pdf` report.
 
-### 📅 [Day 6: Advanced Analytics & Risk Metrics](file:///c:/Users/jibum/OneDrive/Desktop/Bluestock%20Internship/Advanced_Analytics.ipynb)
-*   **Downside Risk Analytics**: Computed 95% Historical Value at Risk (VaR) and Conditional Value at Risk (CVaR) across all 40 schemes, identifying small-cap funds as the highest-risk asset class.
-*   **Rolling Sharpe Ratios**: Calculated and visualized rolling 90-day annualized Sharpe ratios over a 4-year period for 5 key funds to monitor change in risk-adjusted efficiency.
-*   **Investor Cohort Analysis**: Categorized investors by their first transaction year (2024 vs. 2025), analyzing total gross/net invested capital and identifying average monthly SIP ticket sizes.
-*   **SIP Continuity**: Evaluated chronological transaction intervals for long-term investors, flagging those with transaction gaps exceeding 35 days (revealing a 97.8% at-risk churn rate).
-*   **Portfolio Concentration**: Calculated Sector Herfindahl-Hirschman Index (HHI) for equity portfolios, ranking funds from highly concentrated (Axis Bluechip, HHI = 2,967.69) to highly diversified (UTI Mid Cap, HHI = 1,240.20).
-*   **Interactive Fund Recommender**: Built a command-line script (`recommender.py`) that matches investor risk appetite (`Low`/`Moderate`/`High`) to recommend the top 3 mutual funds sorted by Sharpe ratio.
+### 📅 [Day 6: Advanced Analytics & Risk Metrics](file:///c:/Users/jibum/OneDrive/Desktop/Bluestock%20Internship/day%206/README.md)
+*   **Risk Metrics Evaluation:** Computed 95% Historical VaR and 95% CVaR for all 40 schemes, exporting results to `var_cvar_report.csv`. Aligned returns with Nifty 100 calendar to prevent weekend distortions.
+*   **Performance Tracking:** Plotted 90-day annualized rolling Sharpe ratios for 5 major schemes over a 4.4-year timeline, outputting `rolling_sharpe_chart.png`.
+*   **Investor Cohorts:** Categorized investor transactions by first transaction year, computing average SIP amounts, gross/net invested capital, and top fund preference.
+*   **Operational Health:** Evaluated gaps between transaction dates for investors with 6+ SIPs, flagging 97.8% as "at-risk" due to average transaction gaps exceeding 35 days.
+*   **Sector Concentration:** Calculated Sector HHI across all equity portfolios. Axis Bluechip was identified as the most concentrated (HHI: 2,967.69) and UTI Mid Cap as the most diversified (HHI: 1,240.20).
+*   **Standalone Recommendation System:** Built `recommender.py` to recommend the top 3 mutual funds matching user risk appetites (`Low` / `Moderate` / `High`), sorted by Sharpe ratio.
 
 ---
 
