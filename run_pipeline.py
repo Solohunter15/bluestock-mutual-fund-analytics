@@ -14,6 +14,8 @@ import subprocess
 # Determine directories
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 SCRIPTS_FOLDER = os.path.join(SCRIPT_DIR, "scripts")
+if not os.path.exists(SCRIPTS_FOLDER):
+    SCRIPTS_FOLDER = SCRIPT_DIR
 
 def run_script(script_name: str, args: list = None) -> bool:
     """Runs a Python script as a subprocess and logs its output."""
